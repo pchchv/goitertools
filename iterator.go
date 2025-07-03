@@ -65,6 +65,35 @@ func (i Iterate[T, I, MAP]) AnyParallel(fn func(T) bool) (isAny bool) {
 	return k == 1
 }
 
+// All returns true if all element matches the function return,
+// false otherwise.
+func (i Iterate[T, I, MAP]) All(fn func(T) bool) (isAll bool) {
+	var checked bool
+	i.forEach(false, func(v T) (stop bool) {
+		checked = fn(v)
+		return !checked
+	})
+	return checked
+}
+
+// AllParallel returns true if all element matches the function return, false otherwise.
+//
+// This will run in parallel.
+// It is recommended to only use this when the
+// overhead of running n parallel is less than the work needing to be done.
+func (i Iterate[T, I, MAP]) AllParallel(fn func(T) bool) (isAll bool) {
+	var k uint32 = 1
+	i.forEach(true, func(v T) (stop bool) {
+		if fn(v) {
+			return false
+		}
+
+		atomic.StoreUint32(&k, 0)
+		return true
+	})
+	return k == 1
+}
+
 // forEach is an early cancellable form of `ForEach`.
 func (i Iterate[T, I, MAP]) forEach(parallel bool, fn func(T) (stop bool)) {
 	if parallel {
