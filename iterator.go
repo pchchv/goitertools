@@ -3,6 +3,7 @@ package goitertools
 import (
 	"runtime"
 	"sync"
+	"sync/atomic"
 
 	"github.com/pchchv/express/optionext"
 )
@@ -35,6 +36,33 @@ type Iterate[T any, I Iterator[T], MAP any] struct {
 // Next returns the new iterator value.
 func (i Iterate[T, I, MAP]) Next() optionext.Option[T] {
 	return i.iterator.Next()
+}
+
+// Any returns true if any element matches the function return,
+// false otherwise.
+func (i Iterate[T, I, MAP]) Any(fn func(T) bool) (isAny bool) {
+	i.forEach(false, func(v T) (stop bool) {
+		isAny = fn(v)
+		return isAny
+	})
+	return
+}
+
+// AnyParallel returns true if any element matches the function return, false otherwise.
+//
+// This will run in parallel.
+// It is recommended to only use this when the
+// overhead of running n parallel is less than the work needing to be done.
+func (i Iterate[T, I, MAP]) AnyParallel(fn func(T) bool) (isAny bool) {
+	var k uint32
+	i.forEach(true, func(v T) (stop bool) {
+		match := fn(v)
+		if match {
+			atomic.StoreUint32(&k, 1)
+		}
+		return match
+	})
+	return k == 1
 }
 
 // forEach is an early cancellable form of `ForEach`.
