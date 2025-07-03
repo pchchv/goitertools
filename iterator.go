@@ -24,3 +24,8 @@ type PeekableIterator[T any] interface {
 type Iterate[T any, I Iterator[T], MAP any] struct {
 	iterator I
 }
+
+// Next returns the new iterator value.
+func (i Iterate[T, I, MAP]) Next() optionext.Option[T] {
+	return i.iterator.Next()
+}
