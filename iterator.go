@@ -114,6 +114,25 @@ func (i Iterate[T, I, MAP]) ForEachParallel(fn func(T)) {
 	})
 }
 
+// Count consumes the iterator and returns count if iterations.
+//
+// This will run in parallel is using a parallel iterator.
+func (i Iterate[T, I, MAP]) Count() (j int) {
+	i.ForEach(func(_ T) {
+		j++
+	})
+	return j
+}
+
+// CountParallel consumes the iterator concurrently and returns count if iterations.
+func (i Iterate[T, I, MAP]) CountParallel() int {
+	var j int64
+	i.ForEach(func(_ T) {
+		atomic.AddInt64(&j, 1)
+	})
+	return int(j)
+}
+
 // forEach is an early cancellable form of `ForEach`.
 func (i Iterate[T, I, MAP]) forEach(parallel bool, fn func(T) (stop bool)) {
 	if parallel {
