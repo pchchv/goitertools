@@ -180,3 +180,21 @@ func (i Iterate[T, I, MAP]) forEach(parallel bool, fn func(T) (stop bool)) {
 		}
 	}
 }
+
+// Iter creates a new iterator with helper functions.
+//
+// It defaults the Map() function to struct{}.
+// Use IterMap() if you wish to specify a type.
+func Iter[T any, I Iterator[T]](iterator I) Iterate[T, I, struct{}] {
+	return IterMap[T, I, struct{}](iterator)
+}
+
+// IterMap creates a new iterator with helper functions.
+//
+// It accepts a map type `MAP` to allow for usage of the `Map` and `CollectMap` helper function inline.
+// You must use the Map() function standalone otherwise.
+func IterMap[T any, I Iterator[T], MAP any](iterator I) Iterate[T, I, MAP] {
+	return Iterate[T, I, MAP]{
+		iterator: iterator,
+	}
+}
