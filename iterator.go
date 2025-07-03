@@ -19,3 +19,8 @@ type PeekableIterator[T any] interface {
 	// Peek returns the `Next` element from the `Iterator` without advancing it.
 	Peek() optionext.Option[T]
 }
+
+// Iterate is an iterator with attached helper functions.
+type Iterate[T any, I Iterator[T], MAP any] struct {
+	iterator I
+}
