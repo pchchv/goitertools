@@ -94,6 +94,26 @@ func (i Iterate[T, I, MAP]) AllParallel(fn func(T) bool) (isAll bool) {
 	return k == 1
 }
 
+// ForEach runs the provided function for each element until completion.
+//
+// This will run in parallel is using a parallel iterator.
+func (i Iterate[T, I, MAP]) ForEach(fn func(T)) {
+	i.forEach(false, func(t T) (stop bool) {
+		fn(t)
+		return false
+	})
+}
+
+// ForEachParallel runs the provided function for each element in parallel until completion.
+//
+// The function must maintain its own thread safety.
+func (i Iterate[T, I, MAP]) ForEachParallel(fn func(T)) {
+	i.forEach(true, func(t T) (stop bool) {
+		fn(t)
+		return false
+	})
+}
+
 // forEach is an early cancellable form of `ForEach`.
 func (i Iterate[T, I, MAP]) forEach(parallel bool, fn func(T) (stop bool)) {
 	if parallel {
