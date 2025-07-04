@@ -1,2 +1,4 @@
 github.com/pchchv/express v1.2.0 h1:GCJGl4kP/knUumO9PGoPGOyMWSCtYmg1yJkvjZuGnWo=
 github.com/pchchv/express v1.2.0/go.mod h1:tSDCsoa6969BUQRSm0Bp1LgTE3AHldptGM19FEjMp6k=
+github.com/pchchv/go-assert v1.0.0 h1:+/IYtZCgznNIRFbRbuGN5NakcoKGIOZZPb4wTuiSgZI=
+github.com/pchchv/go-assert v1.0.0/go.mod h1:FkOAc+ewzMCGXG8pSK2d/rUEBZKMBQUXsAIQUOxXbJo=
