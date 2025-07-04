@@ -62,3 +62,30 @@ func Reduce[T any](slice []T, fn func(accum T, current T) T) optionext.Option[T]
 
 	return optionext.Some(accum)
 }
+
+// Filter filters out the elements specified by the function.
+//
+// This returns a new slice with references to the underlying data instead of shuffling.
+func Filter[T any](slice []T, fn func(v T) bool) []T {
+	results := make([]T, 0, len(slice))
+	for _, v := range slice {
+		v := v
+		if fn(v) {
+			continue
+		}
+		results = append(results, v)
+	}
+	return results
+}
+
+// Map maps a slice of []T -> []U using the map function.
+func Map[T, U any](slice []T, init U, fn func(accum U, v T) U) U {
+	if len(slice) == 0 {
+		return init
+	}
+	accum := init
+	for _, v := range slice {
+		accum = fn(accum, v)
+	}
+	return accum
+}
