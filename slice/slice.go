@@ -1,6 +1,10 @@
 package slice
 
-import "sort"
+import (
+	"sort"
+
+	"github.com/pchchv/express/optionext"
+)
 
 // Sort sorts the sliceWrapper x given the provided less function.
 //
@@ -42,4 +46,19 @@ func Retain[T any](slice []T, fn func(v T) bool) []T {
 		}
 	}
 	return results
+}
+
+// Reduce reduces the elements to a single one,
+// by repeatedly applying a reducing function.
+func Reduce[T any](slice []T, fn func(accum T, current T) T) optionext.Option[T] {
+	if len(slice) == 0 {
+		return optionext.None[T]()
+	}
+
+	accum := slice[0]
+	for _, v := range slice {
+		accum = fn(accum, v)
+	}
+
+	return optionext.Some(accum)
 }
