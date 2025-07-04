@@ -86,3 +86,15 @@ func TestMap(t *testing.T) {
 	})
 	Equal(t, len(s2), 0)
 }
+
+func BenchmarkReverse(b *testing.B) {
+	s := make([]int, 0, 1000)
+	for i := 0; i < 1000; i++ {
+		s = append(s, i)
+	}
+
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		Reverse(s)
+	}
+}
