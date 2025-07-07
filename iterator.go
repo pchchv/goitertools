@@ -159,6 +159,26 @@ func (i Iterate[T, I, MAP]) Partition(fn func(v T) bool) (left, right []T) {
 	return
 }
 
+// Find searches for the next element of an iterator that satisfies the function.
+func (i Iterate[T, I, MAP]) Find(fn func(T) bool) (result optionext.Option[T]) {
+	for {
+		result = i.iterator.Next()
+		if result.IsNone() || fn(result.Unwrap()) {
+			return
+		}
+	}
+}
+
+// Collect transforms an iterator into a sliceWrapper.
+//
+// This will run in parallel is using a parallel iterator.
+func (i Iterate[T, I, MAP]) Collect() (results []T) {
+	i.ForEach(func(v T) {
+		results = append(results, v)
+	})
+	return
+}
+
 // forEach is an early cancellable form of `ForEach`.
 func (i Iterate[T, I, MAP]) forEach(parallel bool, fn func(T) (stop bool)) {
 	if parallel {
