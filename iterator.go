@@ -133,6 +133,70 @@ func (i Iterate[T, I, MAP]) CountParallel() int {
 	return int(j)
 }
 
+// Position searches for an element in an iterator, returning its index.
+func (i Iterate[T, I, MAP]) Position(fn func(T) bool) optionext.Option[int] {
+	for j := 0; ; j++ {
+		result := i.iterator.Next()
+		if result.IsNone() {
+			return optionext.None[int]()
+		} else if fn(result.Unwrap()) {
+			return optionext.Some(j)
+		}
+	}
+}
+
+// Partition creates two collections from supplied function,
+// all elements returning true will be in one result and all that
+// were returned false in the other.
+func (i Iterate[T, I, MAP]) Partition(fn func(v T) bool) (left, right []T) {
+	i.ForEach(func(v T) {
+		if fn(v) {
+			left = append(left, v)
+		} else {
+			right = append(right, v)
+		}
+	})
+	return
+}
+
+// Find searches for the next element of an iterator that satisfies the function.
+func (i Iterate[T, I, MAP]) Find(fn func(T) bool) (result optionext.Option[T]) {
+	for {
+		result = i.iterator.Next()
+		if result.IsNone() || fn(result.Unwrap()) {
+			return
+		}
+	}
+}
+
+// Collect transforms an iterator into a sliceWrapper.
+//
+// This will run in parallel is using a parallel iterator.
+func (i Iterate[T, I, MAP]) Collect() (results []T) {
+	i.ForEach(func(v T) {
+		results = append(results, v)
+	})
+	return
+}
+
+// Reduce reduces the elements to a single one,
+// by repeatedly applying a reducing function.
+func (i Iterate[T, I, MAP]) Reduce(fn func(accum T, current T) T) optionext.Option[T] {
+	v := i.iterator.Next()
+	if v.IsNone() {
+		return optionext.None[T]()
+	}
+
+	accum := v.Unwrap()
+	for {
+		current := i.iterator.Next()
+		if current.IsNone() {
+			return optionext.Some(accum)
+		}
+		accum = fn(accum, current.Unwrap())
+	}
+}
+
 // forEach is an early cancellable form of `ForEach`.
 func (i Iterate[T, I, MAP]) forEach(parallel bool, fn func(T) (stop bool)) {
 	if parallel {
