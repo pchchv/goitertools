@@ -30,3 +30,18 @@ func TestMap(t *testing.T) {
 	Equal(t, inverted[0], "0")
 	Equal(t, inverted[1], "1")
 }
+
+func TestRetain(t *testing.T) {
+	m := map[string]int{
+		"0": 0,
+		"1": 1,
+		"2": 2,
+		"3": 3,
+	}
+	Retain(m, func(key string, value int) bool {
+		return value < 1 || value > 2
+	})
+	Equal(t, len(m), 2)
+	Equal(t, m["0"], 0)
+	Equal(t, m["3"], 3)
+}
