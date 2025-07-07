@@ -179,6 +179,24 @@ func (i Iterate[T, I, MAP]) Collect() (results []T) {
 	return
 }
 
+// Reduce reduces the elements to a single one,
+// by repeatedly applying a reducing function.
+func (i Iterate[T, I, MAP]) Reduce(fn func(accum T, current T) T) optionext.Option[T] {
+	v := i.iterator.Next()
+	if v.IsNone() {
+		return optionext.None[T]()
+	}
+
+	accum := v.Unwrap()
+	for {
+		current := i.iterator.Next()
+		if current.IsNone() {
+			return optionext.Some(accum)
+		}
+		accum = fn(accum, current.Unwrap())
+	}
+}
+
 // forEach is an early cancellable form of `ForEach`.
 func (i Iterate[T, I, MAP]) forEach(parallel bool, fn func(T) (stop bool)) {
 	if parallel {
