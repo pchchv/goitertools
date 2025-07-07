@@ -133,6 +133,32 @@ func (i Iterate[T, I, MAP]) CountParallel() int {
 	return int(j)
 }
 
+// Position searches for an element in an iterator, returning its index.
+func (i Iterate[T, I, MAP]) Position(fn func(T) bool) optionext.Option[int] {
+	for j := 0; ; j++ {
+		result := i.iterator.Next()
+		if result.IsNone() {
+			return optionext.None[int]()
+		} else if fn(result.Unwrap()) {
+			return optionext.Some(j)
+		}
+	}
+}
+
+// Partition creates two collections from supplied function,
+// all elements returning true will be in one result and all that
+// were returned false in the other.
+func (i Iterate[T, I, MAP]) Partition(fn func(v T) bool) (left, right []T) {
+	i.ForEach(func(v T) {
+		if fn(v) {
+			left = append(left, v)
+		} else {
+			right = append(right, v)
+		}
+	})
+	return
+}
+
 // forEach is an early cancellable form of `ForEach`.
 func (i Iterate[T, I, MAP]) forEach(parallel bool, fn func(T) (stop bool)) {
 	if parallel {
