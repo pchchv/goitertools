@@ -31,3 +31,14 @@ func (i mapWrapper[K, V, MAP]) Next() optionext.Option[Entry[K, V]] {
 	}
 	return optionext.None[Entry[K, V]]()
 }
+
+// Iter is a convenience function that converts the map iterator into an `*Iterate[T]`.
+func (i mapWrapper[K, V, MAP]) Iter() Iterate[Entry[K, V], mapWrapper[K, V, MAP], MAP] {
+	return IterMap[Entry[K, V], mapWrapper[K, V, MAP], MAP](i)
+}
+
+// Retain retains only the elements specified by the function and removes others.
+func (i mapWrapper[K, V, MAP]) Retain(fn func(key K, value V) bool) mapWrapper[K, V, MAP] {
+	mapext.Retain(i.m, fn)
+	return i
+}
