@@ -26,3 +26,11 @@ func (i *filterIterator[T, I, MAP]) Next() optionext.Option[T] {
 func (i *filterIterator[T, I, MAP]) Iter() Iterate[T, Iterator[T], MAP] {
 	return IterMap[T, Iterator[T], MAP](i)
 }
+
+// FilterWithMap creates a new `filterIterator` for use which also specifies a potential future `Map` operation.
+func FilterWithMap[T any, I Iterator[T], MAP any](iterator I, fn FilterFn[T]) *filterIterator[T, I, MAP] {
+	return &filterIterator[T, I, MAP]{
+		iterator: iterator,
+		fn:       fn,
+	}
+}
