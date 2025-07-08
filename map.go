@@ -53,3 +53,8 @@ func WrapMapWithMap[K comparable, V, MAP any](m map[K]V) mapWrapper[K, V, MAP] {
 		m: m,
 	}
 }
+
+// WrapMap creates a new iterator for transformation of types.
+func WrapMap[K comparable, V any](m map[K]V) mapWrapper[K, V, struct{}] {
+	return WrapMapWithMap[K, V, struct{}](m)
+}
