@@ -25,3 +25,11 @@ func (i mapper[T, I, MAP]) Next() optionext.Option[MAP] {
 func (i mapper[T, I, MAP]) Iter() Iterate[MAP, Iterator[MAP], struct{}] {
 	return Iter[MAP, Iterator[MAP]](i)
 }
+
+// Map creates a new iterator for transformation of types.
+func Map[T any, I Iterator[T], MAP any](iterator I, fn MapFn[T, MAP]) mapper[T, I, MAP] {
+	return mapper[T, I, MAP]{
+		iterator: iterator,
+		fn:       fn,
+	}
+}
