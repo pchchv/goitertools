@@ -34,3 +34,8 @@ func FilterWithMap[T any, I Iterator[T], MAP any](iterator I, fn FilterFn[T]) *f
 		fn:       fn,
 	}
 }
+
+// Filter creates a new `filterIterator`.
+func Filter[T any, I Iterator[T]](iterator I, fn FilterFn[T]) *filterIterator[T, I, struct{}] {
+	return FilterWithMap[T, I, struct{}](iterator, fn)
+}
