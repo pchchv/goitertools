@@ -197,6 +197,19 @@ func (i Iterate[T, I, MAP]) Reduce(fn func(accum T, current T) T) optionext.Opti
 	}
 }
 
+// Map accepts a `FilterFn[T]` to filter items.
+//
+// NOTE: This is made possible by passing the one-time possible MAP type around. This is unfortunate but the only way it
+// can be supported due to the limitations of the Go Compiler.
+func (i Iterate[T, I, MAP]) Map(fn MapFn[T, MAP]) mapper[T, Iterator[T], MAP] {
+	return Map[T, Iterator[T], MAP](i.iterator, fn)
+}
+
+// Filter accepts a `FilterFn[T]` to filter items.
+func (i Iterate[T, I, MAP]) Filter(fn FilterFn[T]) Iterate[T, Iterator[T], MAP] {
+	return IterMap[T, Iterator[T], MAP](FilterWithMap[T, I, MAP](i.iterator, fn))
+}
+
 // forEach is an early cancellable form of `ForEach`.
 func (i Iterate[T, I, MAP]) forEach(parallel bool, fn func(T) (stop bool)) {
 	if parallel {
