@@ -45,3 +45,11 @@ func (i mapWrapper[K, V, MAP]) Retain(fn func(key K, value V) bool) mapWrapper[K
 	mapext.Retain(i.m, fn)
 	return i
 }
+
+// WrapMapWithMap creates a new `mapWrapper` for
+// use which also specifies a potential future `Map` operation.
+func WrapMapWithMap[K comparable, V, MAP any](m map[K]V) mapWrapper[K, V, MAP] {
+	return mapWrapper[K, V, MAP]{
+		m: m,
+	}
+}
