@@ -1,6 +1,9 @@
 package goitertools
 
-import "github.com/pchchv/express/optionext"
+import (
+	"github.com/pchchv/express/optionext"
+	mapext "github.com/pchchv/goitertools/map"
+)
 
 // Entry represents a single Map entry.
 type Entry[K comparable, V any] struct {
