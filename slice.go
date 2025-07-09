@@ -62,6 +62,25 @@ func (i sliceWrapper[T, MAP]) SortStable(less func(i T, j T) bool) sliceWrapper[
 	return WrapSliceMap[T, MAP](i.slice)
 }
 
+// Cap returns the capacity of the underlying sliceWrapper.
+func (i sliceWrapper[T, MAP]) Cap() int {
+	return cap(i.slice)
+}
+
+// Filter filters out the elements specified by the function.
+//
+// This shuffles and returns the retained values of the slice.
+func (i sliceWrapper[T, MAP]) Filter(fn func(v T) bool) sliceWrapper[T, MAP] {
+	return WrapSliceMap[T, MAP](slice.Filter(i.slice, fn))
+}
+
+// Retain retains only the elements specified by the function.
+//
+// This shuffles and returns the retained values of the slice.
+func (i sliceWrapper[T, MAP]) Retain(fn func(v T) bool) sliceWrapper[T, MAP] {
+	return WrapSliceMap[T, MAP](slice.Retain(i.slice, fn))
+}
+
 // WrapSliceMap accepts and turns a sliceWrapper into an
 // iterator with a map type specified for IterPar() to
 // allow the Map helper function.
