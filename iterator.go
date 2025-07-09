@@ -210,6 +210,24 @@ func (i Iterate[T, I, MAP]) Filter(fn FilterFn[T]) Iterate[T, Iterator[T], MAP] 
 	return IterMap[T, Iterator[T], MAP](FilterWithMap[T, I, MAP](i.iterator, fn))
 }
 
+// CollectIter transforms an iterator into a sliceWrapper and
+// returns a *sliceWrapper in order to run additional functions inline such as Sort().
+//
+// eg. .Filter(...).CollectIter().Sort(...).WrapSlice()
+//
+// This will run in parallel is using a parallel iterator.
+func (i Iterate[T, I, MAP]) CollectIter() sliceWrapper[T, MAP] {
+	return WrapSliceMap[T, MAP](i.Collect())
+}
+
+// PartitionIter creates two iterable collections from supplied function,
+// all elements returning true will be in one result
+// and all that were returned false in the other.
+func (i Iterate[T, I, MAP]) PartitionIter(fn func(v T) bool) (left, right sliceWrapper[T, struct{}]) {
+	l, r := i.Partition(fn)
+	return WrapSlice(l), WrapSlice(r)
+}
+
 // forEach is an early cancellable form of `ForEach`.
 func (i Iterate[T, I, MAP]) forEach(parallel bool, fn func(T) (stop bool)) {
 	if parallel {
