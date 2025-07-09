@@ -43,3 +43,12 @@ func (i sliceWrapper[T, MAP]) Map(init MAP, fn func(accum MAP, v T) MAP) MAP {
 func (i sliceWrapper[T, MAP]) Slice() []T {
 	return i.slice
 }
+
+// WrapSliceMap accepts and turns a sliceWrapper into an
+// iterator with a map type specified for IterPar() to
+// allow the Map helper function.
+func WrapSliceMap[T, MAP any](slice []T) sliceWrapper[T, MAP] {
+	return sliceWrapper[T, MAP]{
+		slice: slice,
+	}
+}
