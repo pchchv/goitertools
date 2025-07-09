@@ -44,6 +44,24 @@ func (i sliceWrapper[T, MAP]) Slice() []T {
 	return i.slice
 }
 
+// Sort sorts the sliceWrapper x given the provided less function.
+//
+// The sort is not guaranteed to be stable:
+// equal elements may be reversed from their original order.
+//
+// For a stable sort, use SortStable.
+func (i sliceWrapper[T, MAP]) Sort(less func(i T, j T) bool) sliceWrapper[T, MAP] {
+	slice.Sort(i.slice, less)
+	return WrapSliceMap[T, MAP](i.slice)
+}
+
+// SortStable sorts the sliceWrapper x using the provided less function,
+// keeping equal elements in their original order.
+func (i sliceWrapper[T, MAP]) SortStable(less func(i T, j T) bool) sliceWrapper[T, MAP] {
+	slice.SortStable(i.slice, less)
+	return WrapSliceMap[T, MAP](i.slice)
+}
+
 // WrapSliceMap accepts and turns a sliceWrapper into an
 // iterator with a map type specified for IterPar() to
 // allow the Map helper function.
