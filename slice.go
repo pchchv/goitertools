@@ -89,3 +89,10 @@ func WrapSliceMap[T, MAP any](slice []T) sliceWrapper[T, MAP] {
 		slice: slice,
 	}
 }
+
+// WrapSlice accepts and turns a sliceWrapper into an iterator.
+//
+// The default the Map type to struct{} when none is required. See WrapSliceMap if one is needed.
+func WrapSlice[T any](slice []T) sliceWrapper[T, struct{}] {
+	return WrapSliceMap[T, struct{}](slice)
+}
