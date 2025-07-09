@@ -38,3 +38,8 @@ func ChainWithMap[T any, FI Iterator[T], SI Iterator[T], MAP any](first FI, seco
 		next:    second,
 	}
 }
+
+// Chain creates a new `chainIterator[T]` for use.
+func Chain[T any, FI Iterator[T], SI Iterator[T]](first FI, second SI) *chainIterator[T, FI, SI, struct{}] {
+	return ChainWithMap[T, FI, SI, struct{}](first, second)
+}
