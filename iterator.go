@@ -210,6 +210,11 @@ func (i Iterate[T, I, MAP]) Filter(fn FilterFn[T]) Iterate[T, Iterator[T], MAP] 
 	return IterMap[T, Iterator[T], MAP](FilterWithMap[T, I, MAP](i.iterator, fn))
 }
 
+// Chain creates a new chainIterator for use.
+func (i Iterate[T, I, MAP]) Chain(iterator Iterator[T]) Iterate[T, Iterator[T], MAP] {
+	return IterMap[T, Iterator[T], MAP](ChainWithMap[T, Iterator[T], Iterator[T], MAP](i.iterator, iterator))
+}
+
 // CollectIter transforms an iterator into a sliceWrapper and
 // returns a *sliceWrapper in order to run additional functions inline such as Sort().
 //
