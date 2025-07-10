@@ -21,3 +21,11 @@ func (i *takeIterator[T, I, MAP]) Next() optionext.Option[T] {
 func (i *takeIterator[T, I, MAP]) Iter() Iterate[T, Iterator[T], MAP] {
 	return IterMap[T, Iterator[T], MAP](i)
 }
+
+// TakeWithMap creates a new `takeIterator[T]` for use and can specify a future `Map` type conversion.
+func TakeWithMap[T any, I Iterator[T], MAP any](iterator I, n int) *takeIterator[T, I, MAP] {
+	return &takeIterator[T, I, MAP]{
+		iterator: iterator,
+		limit:    n,
+	}
+}
