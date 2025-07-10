@@ -1,5 +1,7 @@
 package goitertools
 
+import "github.com/pchchv/express/optionext"
+
 // TakeWhileFn represents the `takeWhileIterator[T]` function.
 type TakeWhileFn[T any] func(v T) bool
 
@@ -9,4 +11,19 @@ type TakeWhileFn[T any] func(v T) bool
 type takeWhileIterator[T any, I Iterator[T], MAP any] struct {
 	iterator Iterator[T]
 	fn       TakeWhileFn[T]
+}
+
+// Next returns the next element until `TakeWhileFn[T]` returns false or end of the iterator.
+func (i takeWhileIterator[T, I, MAP]) Next() optionext.Option[T] {
+	for {
+		v := i.iterator.Next()
+		if v.IsNone() || i.fn(v.Unwrap()) {
+			return v
+		}
+	}
+}
+
+// Iter is a convenience function that converts the `takeWhileIterator` iterator into an `*Iterate[T]`.
+func (i takeWhileIterator[T, I, MAP]) Iter() Iterate[T, Iterator[T], MAP] {
+	return IterMap[T, Iterator[T], MAP](i)
 }
