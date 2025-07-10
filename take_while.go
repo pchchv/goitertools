@@ -27,3 +27,11 @@ func (i takeWhileIterator[T, I, MAP]) Next() optionext.Option[T] {
 func (i takeWhileIterator[T, I, MAP]) Iter() Iterate[T, Iterator[T], MAP] {
 	return IterMap[T, Iterator[T], MAP](i)
 }
+
+// TakeWhileWithMap creates a new `takeWhileIterator[T,I]` for use and can specify a future `Map` type conversion.
+func TakeWhileWithMap[T any, I Iterator[T], MAP any](iterator Iterator[T], fn TakeWhileFn[T]) takeWhileIterator[T, I, MAP] {
+	return takeWhileIterator[T, I, MAP]{
+		iterator: iterator,
+		fn:       fn,
+	}
+}
