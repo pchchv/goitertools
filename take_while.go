@@ -35,3 +35,8 @@ func TakeWhileWithMap[T any, I Iterator[T], MAP any](iterator Iterator[T], fn Ta
 		fn:       fn,
 	}
 }
+
+// TakeWhile creates a new `takeWhileIterator[T,I]` for use.
+func TakeWhile[T any, I Iterator[T]](iterator I, fn TakeWhileFn[T]) takeWhileIterator[T, I, struct{}] {
+	return TakeWhileWithMap[T, I, struct{}](iterator, fn)
+}
