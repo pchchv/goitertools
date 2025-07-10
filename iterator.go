@@ -215,6 +215,18 @@ func (i Iterate[T, I, MAP]) Chain(iterator Iterator[T]) Iterate[T, Iterator[T], 
 	return IterMap[T, Iterator[T], MAP](ChainWithMap[T, Iterator[T], Iterator[T], MAP](i.iterator, iterator))
 }
 
+// Take yields elements until n elements are yielded or
+// the end of the iterator is reached (whichever happens first).
+func (i Iterate[T, I, MAP]) Take(n int) Iterate[T, Iterator[T], MAP] {
+	return IterMap[T, Iterator[T], MAP](Take(i.iterator, n))
+}
+
+// TakeWhile yields elements while the function return true or
+// the end of the iterator is reached (whichever happens first).
+func (i Iterate[T, I, MAP]) TakeWhile(fn TakeWhileFn[T]) Iterate[T, Iterator[T], MAP] {
+	return IterMap[T, Iterator[T], MAP](TakeWhile(i.iterator, fn))
+}
+
 // CollectIter transforms an iterator into a sliceWrapper and
 // returns a *sliceWrapper in order to run additional functions inline such as Sort().
 //
