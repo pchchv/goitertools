@@ -29,3 +29,8 @@ func TakeWithMap[T any, I Iterator[T], MAP any](iterator I, n int) *takeIterator
 		limit:    n,
 	}
 }
+
+// Take creates a new `takeIterator[T]` for use.
+func Take[T any, I Iterator[T]](iterator I, n int) *takeIterator[T, I, struct{}] {
+	return TakeWithMap[T, I, struct{}](iterator, n)
+}
