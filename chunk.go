@@ -31,3 +31,18 @@ func (i chunker[T, I, MAP]) Next() optionext.Option[[]T] {
 
 	return optionext.Some(chunk)
 }
+
+// ChunkWithMap creates a new `chunker` for use that accepts a Map type for use with `Iterate`.
+func ChunkWithMap[T any, I Iterator[T], MAP any](iterator I, size int) chunker[T, I, MAP] {
+	return chunker[T, I, MAP]{
+		iterator: iterator,
+		size:     size,
+	}
+}
+
+// Chunk creates a new `chunker` for use.
+//
+// The default Map type is struct{}, see `ChunkWithMap` for details.
+func Chunk[T any, I Iterator[T]](iterator I, size int) chunker[T, I, struct{}] {
+	return ChunkWithMap[T, I, struct{}](iterator, size)
+}
