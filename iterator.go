@@ -227,6 +227,15 @@ func (i Iterate[T, I, MAP]) TakeWhile(fn TakeWhileFn[T]) Iterate[T, Iterator[T],
 	return IterMap[T, Iterator[T], MAP](TakeWhile(i.iterator, fn))
 }
 
+// Chunk returns a `*Iterate[T, V]` the returns an []T of the specified size.
+//
+// The last slice is not guaranteed to be
+// the exact chunk size when iterator finishes the
+// remainder is returned.
+func (i Iterate[T, I, MAP]) Chunk(size int) chunker[T, Iterator[T], MAP] {
+	return ChunkWithMap[T, Iterator[T], MAP](i.iterator, size)
+}
+
 // CollectIter transforms an iterator into a sliceWrapper and
 // returns a *sliceWrapper in order to run additional functions inline such as Sort().
 //
