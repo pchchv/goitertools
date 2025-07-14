@@ -254,6 +254,14 @@ func (i Iterate[T, I, MAP]) PartitionIter(fn func(v T) bool) (left, right sliceW
 	return WrapSlice(l), WrapSlice(r)
 }
 
+// StepBy returns a `Iterate[T, V]` starting at the same point,
+// but stepping by the given amount at each iteration.
+//
+// The first element is always returned before the stepping begins.
+func (i Iterate[T, I, MAP]) StepBy(step int) Iterate[T, Iterator[T], MAP] {
+	return IterMap[T, Iterator[T], MAP](StepBy[T](i.iterator, step))
+}
+
 // forEach is an early cancellable form of `ForEach`.
 func (i Iterate[T, I, MAP]) forEach(parallel bool, fn func(T) (stop bool)) {
 	if parallel {
