@@ -38,3 +38,12 @@ func (i *stepByIterator[T, I, MAP]) Next() optionext.Option[T] {
 func (i *stepByIterator[T, I, MAP]) Iter() Iterate[T, Iterator[T], MAP] {
 	return IterMap[T, Iterator[T], MAP](i)
 }
+
+// StepByWithMap returns a `stepByIterator[T]` for use and can specify a future `Map` type conversion.
+func StepByWithMap[T any, I Iterator[T], MAP any](iterator I, step int) *stepByIterator[T, I, MAP] {
+	return &stepByIterator[T, I, MAP]{
+		iterator: iterator,
+		step:     step,
+		first:    true,
+	}
+}
