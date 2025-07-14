@@ -47,3 +47,8 @@ func StepByWithMap[T any, I Iterator[T], MAP any](iterator I, step int) *stepByI
 		first:    true,
 	}
 }
+
+// StepBy returns a `stepByIterator[T]` for use.
+func StepBy[T any, I Iterator[T]](iterator I, step int) *stepByIterator[T, I, struct{}] {
+	return StepByWithMap[T, I, struct{}](iterator, step)
+}
