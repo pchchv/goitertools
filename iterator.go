@@ -262,6 +262,13 @@ func (i Iterate[T, I, MAP]) StepBy(step int) Iterate[T, Iterator[T], MAP] {
 	return IterMap[T, Iterator[T], MAP](StepBy[T](i.iterator, step))
 }
 
+// Peekable returns a `PeekableIterator[T]` that wraps the current iterator.
+//
+// NOTE: Peekable iterators are commonly the LAST in a chain of iterators.
+func (i Iterate[T, I, MAP]) Peekable() *peekableIterator[T, Iterator[T]] {
+	return Peekable[T, Iterator[T]](i.iterator)
+}
+
 // forEach is an early cancellable form of `ForEach`.
 func (i Iterate[T, I, MAP]) forEach(parallel bool, fn func(T) (stop bool)) {
 	if parallel {
