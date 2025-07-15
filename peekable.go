@@ -30,3 +30,12 @@ func (i *peekableIterator[T, I]) Peek() optionext.Option[T] {
 	i.prev = i.iterator.Next()
 	return i.prev
 }
+
+// Peekable accepts and `Iterator[T]` and turns it into a Peekable iterator.
+//
+// NOTE: Peekable iterators are commonly the LAST in a chain of iterators.
+func Peekable[T any, I Iterator[T]](iterator I) *peekableIterator[T, I] {
+	return &peekableIterator[T, I]{
+		iterator: iterator,
+	}
+}
