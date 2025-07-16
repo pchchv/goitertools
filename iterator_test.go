@@ -160,6 +160,18 @@ func TestIterate(t *testing.T) {
 	Equal(t, right.Next(), optionext.None[int]())
 }
 
+func BenchmarkIterate_Complex(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		WrapSliceMap[int, string]([]int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}).Iter().StepBy(2).Filter(func(v int) bool {
+			return v < 6
+		}).Map(func(v int) string {
+			return strconv.Itoa(v)
+		}).Iter().CollectIter().Sort(func(i string, j string) bool {
+			return i < j
+		})
+	}
+}
+
 func makeSlice() []int {
 	return []int{0, 1, 2}
 }
