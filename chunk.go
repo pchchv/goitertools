@@ -1,6 +1,6 @@
 package goitertools
 
-import "github.com/pchchv/express/optionext"
+import "github.com/pchchv/extender/optionext"
 
 // chunker chunks the returned elements into slices of specified size.
 //

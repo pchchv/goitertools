@@ -5,7 +5,7 @@ import (
 	"sync"
 	"sync/atomic"
 
-	"github.com/pchchv/express/optionext"
+	"github.com/pchchv/extender/optionext"
 )
 
 var numCPU = runtime.NumCPU()

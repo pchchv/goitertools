@@ -4,9 +4,9 @@ import (
 	"strconv"
 	"testing"
 
-	"github.com/pchchv/express/optionext"
+	"github.com/pchchv/extender/optionext"
+	"github.com/pchchv/extender/sliceext"
 	. "github.com/pchchv/go-assert"
-	"github.com/pchchv/goitertools/slice"
 )
 
 func TestSlice(t *testing.T) {
@@ -164,7 +164,7 @@ func BenchmarkSliceWrapper_Retain(b *testing.B) {
 
 func BenchmarkRetainSlice_Retain(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		slice.Retain(makeSlice(), func(v int) bool {
+		sliceext.Retain(makeSlice(), func(v int) bool {
 			return v == 1
 		})
 	}

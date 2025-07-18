@@ -1,8 +1,8 @@
 package goitertools
 
 import (
-	"github.com/pchchv/express/optionext"
-	mapext "github.com/pchchv/goitertools/map"
+	"github.com/pchchv/extender/mapext"
+	"github.com/pchchv/extender/optionext"
 )
 
 // Entry represents a single Map entry.

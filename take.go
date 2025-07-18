@@ -1,6 +1,6 @@
 package goitertools
 
-import "github.com/pchchv/express/optionext"
+import "github.com/pchchv/extender/optionext"
 
 // takeIterator is an iterator that only iterates over n elements.
 type takeIterator[T any, I Iterator[T], MAP any] struct {

@@ -1,6 +1,6 @@
 package goitertools
 
-import "github.com/pchchv/express/optionext"
+import "github.com/pchchv/extender/optionext"
 
 // FilterFn represents the `filterIterator` function.
 type FilterFn[T any] func(v T) bool

@@ -1,6 +1,6 @@
 package goitertools
 
-import "github.com/pchchv/express/optionext"
+import "github.com/pchchv/extender/optionext"
 
 // TakeWhileFn represents the `takeWhileIterator[T]` function.
 type TakeWhileFn[T any] func(v T) bool

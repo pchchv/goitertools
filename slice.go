@@ -1,8 +1,8 @@
 package goitertools
 
 import (
-	"github.com/pchchv/express/optionext"
-	"github.com/pchchv/goitertools/slice"
+	"github.com/pchchv/extender/optionext"
+	"github.com/pchchv/extender/sliceext"
 )
 
 type sliceWrapper[T, MAP any] struct {
@@ -36,7 +36,7 @@ func (i sliceWrapper[T, MAP]) Iter() Iterate[T, *sliceWrapper[T, MAP], MAP] {
 
 // Map maps a slice of []T -> MAP using the map function.
 func (i sliceWrapper[T, MAP]) Map(init MAP, fn func(accum MAP, v T) MAP) MAP {
-	return slice.Map[T, MAP](i.slice, init, fn)
+	return sliceext.Map[T, MAP](i.slice, init, fn)
 }
 
 // Slice returns the underlying sliceWrapper wrapped by the *sliceWrapper.
@@ -51,14 +51,14 @@ func (i sliceWrapper[T, MAP]) Slice() []T {
 //
 // For a stable sort, use SortStable.
 func (i sliceWrapper[T, MAP]) Sort(less func(i T, j T) bool) sliceWrapper[T, MAP] {
-	slice.Sort(i.slice, less)
+	sliceext.Sort(i.slice, less)
 	return WrapSliceMap[T, MAP](i.slice)
 }
 
 // SortStable sorts the sliceWrapper x using the provided less function,
 // keeping equal elements in their original order.
 func (i sliceWrapper[T, MAP]) SortStable(less func(i T, j T) bool) sliceWrapper[T, MAP] {
-	slice.SortStable(i.slice, less)
+	sliceext.SortStable(i.slice, less)
 	return WrapSliceMap[T, MAP](i.slice)
 }
 
@@ -69,16 +69,16 @@ func (i sliceWrapper[T, MAP]) Cap() int {
 
 // Filter filters out the elements specified by the function.
 //
-// This shuffles and returns the retained values of the slice.
+// This shuffles and returns the retained values of the sliceext.
 func (i sliceWrapper[T, MAP]) Filter(fn func(v T) bool) sliceWrapper[T, MAP] {
-	return WrapSliceMap[T, MAP](slice.Filter(i.slice, fn))
+	return WrapSliceMap[T, MAP](sliceext.Filter(i.slice, fn))
 }
 
 // Retain retains only the elements specified by the function.
 //
-// This shuffles and returns the retained values of the slice.
+// This shuffles and returns the retained values of the sliceext.
 func (i sliceWrapper[T, MAP]) Retain(fn func(v T) bool) sliceWrapper[T, MAP] {
-	return WrapSliceMap[T, MAP](slice.Retain(i.slice, fn))
+	return WrapSliceMap[T, MAP](sliceext.Retain(i.slice, fn))
 }
 
 // WrapSliceMap accepts and turns a sliceWrapper into an

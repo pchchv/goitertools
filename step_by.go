@@ -1,6 +1,6 @@
 package goitertools
 
-import "github.com/pchchv/express/optionext"
+import "github.com/pchchv/extender/optionext"
 
 // stepByIterator is an iterator starting at the same point,
 // but stepping by the given amount at each iteration.

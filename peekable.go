@@ -1,6 +1,6 @@
 package goitertools
 
-import "github.com/pchchv/express/optionext"
+import "github.com/pchchv/extender/optionext"
 
 // peekableIterator makes an `Iterator` peekable.
 type peekableIterator[T any, I Iterator[T]] struct {

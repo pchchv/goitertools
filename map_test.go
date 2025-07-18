@@ -3,9 +3,9 @@ package goitertools
 import (
 	"testing"
 
-	"github.com/pchchv/express/optionext"
+	"github.com/pchchv/extender/mapext"
+	"github.com/pchchv/extender/optionext"
 	. "github.com/pchchv/go-assert"
-	mapext "github.com/pchchv/goitertools/map"
 )
 
 func TestMap(t *testing.T) {

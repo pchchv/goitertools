@@ -1,6 +1,6 @@
 package goitertools
 
-import "github.com/pchchv/express/optionext"
+import "github.com/pchchv/extender/optionext"
 
 // MapFn represents the mapWrapper transformation function.
 type MapFn[T, MAP any] func(v T) MAP

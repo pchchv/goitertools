@@ -1,6 +1,6 @@
 package goitertools
 
-import "github.com/pchchv/express/optionext"
+import "github.com/pchchv/extender/optionext"
 
 // chainIterator takes two iterators and creates a new iterator over both in sequence.
 type chainIterator[T any, FI Iterator[T], SI Iterator[T], MAP any] struct {

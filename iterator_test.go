@@ -5,7 +5,7 @@ import (
 	"sync/atomic"
 	"testing"
 
-	"github.com/pchchv/express/optionext"
+	"github.com/pchchv/extender/optionext"
 	. "github.com/pchchv/go-assert"
 )
 
