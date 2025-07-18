@@ -1,6 +1,6 @@
-github.com/pchchv/extender v0.0.0-20250717164943-0463706810c2 h1:lnVeM0SWAYm+BsotL8JPiSaMG8QPctMgK0JQshis/Wk=
-github.com/pchchv/extender v0.0.0-20250717164943-0463706810c2/go.mod h1:OpVL1PY1/puv7XTLGabxD9ZnUdc0iELGHlqVoE2H/Mg=
-github.com/pchchv/extender v0.0.0-20250717170135-1fa1c030e876 h1:WnqiLcMhhl/bm2BXZ7yZgKhiq5E1Oug9gV5jWkLcirk=
-github.com/pchchv/extender v0.0.0-20250717170135-1fa1c030e876/go.mod h1:yBvlM+ngi32kHYIhz5D+qeuU4UhPg1/MWYQmBVwClLU=
+github.com/pchchv/extender v1.0.0 h1:lnVeM0SWAYm+BsotL8JPiSaMG8QPctMgK0JQshis/Wk=
+github.com/pchchv/extender v1.0.0/go.mod h1:OpVL1PY1/puv7XTLGabxD9ZnUdc0iELGHlqVoE2H/Mg=
+github.com/pchchv/extender v1.0.0 h1:WnqiLcMhhl/bm2BXZ7yZgKhiq5E1Oug9gV5jWkLcirk=
+github.com/pchchv/extender v1.0.0/go.mod h1:yBvlM+ngi32kHYIhz5D+qeuU4UhPg1/MWYQmBVwClLU=
 github.com/pchchv/go-assert v1.0.0 h1:+/IYtZCgznNIRFbRbuGN5NakcoKGIOZZPb4wTuiSgZI=
 github.com/pchchv/go-assert v1.0.0/go.mod h1:FkOAc+ewzMCGXG8pSK2d/rUEBZKMBQUXsAIQUOxXbJo=
